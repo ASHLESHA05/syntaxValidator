@@ -1,0 +1,45 @@
+import ply.yacc as yacc
+from lex_example import tokens  # Assuming you have defined C++ tokens in lex_example
+
+# Define the grammar rules for C++ function declarations
+def p_function_declaration(p):
+    '''
+    function_declaration : type ID LPAREN parameter_list RPAREN SEMICOLON
+                        | type ID LPAREN RPAREN SEMICOLON
+    '''
+    if len(p) == 7:
+        print(f"Valid C++ function declaration: {p[1]} {p[2]}()")
+    else:
+        print(f"Valid C++ function declaration: {p[1]} {p[2]}()")
+
+def p_type(p):
+    '''type : INT
+            | FLOAT
+            | DOUBLE
+            | CHAR
+    '''
+    p[0] = p[1]
+
+def p_parameter_list(p):
+    '''
+    parameter_list : type ID
+                | parameter_list COMMA type ID
+    '''
+    if len(p) == 3:
+        p[0] = [(p[1], p[2])]
+    else:
+        p[0] = p[1] + [(p[3], p[4])]
+
+def p_error(p):
+    print(f"Syntax error in input:")
+
+# Build the parser
+parser = yacc.yacc()
+
+# Example inputs for testing
+
+
+# Parsing and checking the syntax
+parser.parse(input())
+parser.parse(input())
+parser.parse(input())
