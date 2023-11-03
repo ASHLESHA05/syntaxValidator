@@ -37,10 +37,13 @@ def t_CIN(t):
     t.type = cpp_keywords.get(t.value, 'CIN')
     return t
 
+
 def t_MSG(t):
     r'//[a-zA-Z0-9_]*'
     t.type = cpp_keywords.get(t.value, 'MSG')
     return t
+
+
 def t_NUM(t):
     r'[0-9][0-9]*'
     t.type = cpp_keywords.get(t.value, 'NUM')
