@@ -11,10 +11,10 @@ cpp_keywords = {
 }
 
 # Define the tokens
-tokens = ['GCI', 'GCO', 'CIN', 'Q', 'COUT', 'MSG', 'LPRAN', 'RPRAN', 'NUM', 'ID', 'COMMA', 'SEMICOLON', 'SQBRACL', 'SQBRACR', 'LBRACES', 'RBRACES'] + list(cpp_keywords.values())
+tokens = ['GCI', 'GCO', 'CIN', 'Q', 'COUT', 'MSG','HELO', 'LPRAN', 'RPRAN', 'NUM', 'ID', 'COMMA', 'SEMICOLON', 'SQBRACL', 'SQBRACR', 'LBRACES', 'RBRACES'] + list(cpp_keywords.values())
 
 # Regular expressions for simple tokens
-t_Q = r'\"'
+t_Q = r'"'
 t_GCO = r'\<<'
 t_GCI = r'\>>'
 t_SEMICOLON = r';'
@@ -53,7 +53,10 @@ def t_ID(t):
     r'[a-zA-Z_][a-zA-Z_0-9]*'
     t.type = cpp_keywords.get(t.value, 'ID')
     return t
-
+def t_HELO(t):
+    r'[A-Z][A-Z0-9]*|[a-z][a-z0-9]*'
+    t.type = cpp_keywords.get(t.value, 'HELO')
+    return t
 # Ignore whitespace and tabs
 t_ignore = ' \t'
 
@@ -70,6 +73,7 @@ def p_statements(p):
     '''statements : type ID function content'''
     print("Valid declaration")
 
+
 def p_type(p):
     '''type : INT
             | FLOAT
@@ -85,7 +89,7 @@ def p_content(p):
 def p_arguments1(p):
     '''arguments1 : type ID SEMICOLON arguments1
                  | type dArray SEMICOLON arguments1
-                 | COUT GCO Q MSG Q SEMICOLON arguments1
+                 | COUT GCO Q HELO Q SEMICOLON arguments1
                  | CIN GCI  ID SEMICOLON arguments1
                  | MSG 
                  |
