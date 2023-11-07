@@ -88,7 +88,6 @@ def p_content(p):
 
 def p_arguments1(p):
     '''arguments1 : type ID SEMICOLON arguments1
-                 | type dArray SEMICOLON arguments1
                  | COUT GCO Q HELO Q SEMICOLON arguments1
                  | CIN GCI  ID SEMICOLON arguments1
                  | MSG 
